@@ -4,6 +4,7 @@
 <div align="center">
     <img src="src/main/resources/Icons/taskbarIcon_colorized.png" alt="Logo" width="80" height="80">
   <h3 align="center">OOP2 Project: wingetUI</h3>
+    <p>Made by Andres Soria, Luca Bützberger. This is a copy of the original repo.</p>
 </div>
 
 <!-- PROJECT DESCRIPTION -->
