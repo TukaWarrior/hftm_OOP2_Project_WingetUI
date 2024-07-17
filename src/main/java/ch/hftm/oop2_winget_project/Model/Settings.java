@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WinGetSettings
+public class Settings
 {
     private String columnHeaderIdText;
     private String columnHeaderVersionText;

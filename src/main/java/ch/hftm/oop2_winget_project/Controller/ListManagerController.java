@@ -1,9 +1,9 @@
 package ch.hftm.oop2_winget_project.Controller;
 
 import ch.hftm.oop2_winget_project.App;
-import ch.hftm.oop2_winget_project.Model.ListManager;
+import ch.hftm.oop2_winget_project.Model.ListManagerFX;
 import ch.hftm.oop2_winget_project.Model.Message;
-import ch.hftm.oop2_winget_project.Model.PackageList;
+import ch.hftm.oop2_winget_project.Model.PackageListFX;
 import ch.hftm.oop2_winget_project.Persistence.Serializer;
 import ch.hftm.oop2_winget_project.Util.StageAndSceneManager;
 import javafx.collections.FXCollections;
@@ -21,7 +21,7 @@ import static ch.hftm.oop2_winget_project.Persistence.BatchFileCreator.createIns
 
 public class ListManagerController {
 
-    private ListManager listManager;
+    private ListManagerFX listManager;
     @FXML
     private Button button_create;
     @FXML
@@ -31,11 +31,11 @@ public class ListManagerController {
     @FXML
     private Button button_batchScript;
     @FXML
-    private TableView<PackageList> tableView_packageLists;
+    private TableView<PackageListFX> tableView_packageLists;
     @FXML
-    private TableColumn<PackageList, String> column_name;
+    private TableColumn<PackageListFX, String> column_name;
     @FXML
-    private TableColumn<PackageList, Integer> column_size;
+    private TableColumn<PackageListFX, Integer> column_size;
     @FXML
     private ComboBox<String> comboBox_filter;
     @FXML
@@ -43,7 +43,7 @@ public class ListManagerController {
 
     @FXML
     private void initialize() {
-        listManager = ListManager.getInstance(); //Getting the single instance of ListManager.
+        listManager = ListManagerFX.getInstance(); //Getting the single instance of ListManager.
         initializeTableViewData();
         initializeUIElements();
         initializeDoubleClickOnRow();
@@ -69,7 +69,7 @@ public class ListManagerController {
         // Set the commit action for editing the 'name' column
         column_name.setOnEditCommit(event -> {
             final String newName = event.getNewValue() != null ? event.getNewValue().trim() : "";
-            PackageList packageList = event.getRowValue(); // Get the actual PackageList object being edited
+            PackageListFX packageList = event.getRowValue(); // Get the actual PackageList object being edited
             if (!newName.isEmpty()) {
                 packageList.setName(newName); // Update the name if new name is not empty
                 Serializer.serializeListManager(); // Assuming you have a method to serialize (save) the updated ListManager
@@ -89,7 +89,7 @@ public class ListManagerController {
                     buttonRename_onAction();
                     break;
                 case DELETE:
-                    PackageList selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
+                    PackageListFX selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
                     if (selectedPackageList != null && "favourite-list-uuid".equals(selectedPackageList.getId())) {
                         System.out.println("Selected item is the favourites list, which cannot be deleted.");
                     } else {
@@ -135,7 +135,7 @@ public class ListManagerController {
 
     @FXML
     private void buttoncreateBatchFile_onAction(){
-        PackageList selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
+        PackageListFX selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
         if (selectedPackageList != null) {
             createInstallScript(selectedPackageList);
             System.out.println("Batch file created for: " + selectedPackageList.getName());
@@ -146,7 +146,7 @@ public class ListManagerController {
 
     @FXML
     private void deletePackageListButton_onAction(){
-        PackageList selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
+        PackageListFX selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
 
         if (Message.showConfirmationDialog("Do you really want to delete the Package List " + selectedPackageList.getName() + " ?", "Delete Package List") == ButtonBar.ButtonData.YES) {
             listManager.deletePackageList(selectedPackageList);
@@ -157,7 +157,7 @@ public class ListManagerController {
     @FXML
     private void buttonRename_onAction() {
 
-        PackageList selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
+        PackageListFX selectedPackageList = tableView_packageLists.getSelectionModel().getSelectedItem();
         int selectedIndex = tableView_packageLists.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0 && !selectedPackageList.getId().equals("favourite-list-uuid")) {
             // Temporarily enable editing to rename the selected item
@@ -180,7 +180,7 @@ public class ListManagerController {
 //    Event Handlers / Listeners
     private void initializeDoubleClickOnRow() {
         tableView_packageLists.setRowFactory(tv -> {
-            TableRow<PackageList> row = new TableRow<>();
+            TableRow<PackageListFX> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     listManager.setSelectedPackageList(row.getItem());
@@ -204,12 +204,12 @@ public class ListManagerController {
         String filterAttribute = comboBox_filter.getValue();
 
         if (filterText.isEmpty() || filterAttribute == null) {
-            tableView_packageLists.setItems(ListManager.getInstance().getFXLists());
+            tableView_packageLists.setItems(ListManagerFX.getInstance().getFXLists());
             return;
         }
 
-        Stream<PackageList> pkgListStream = ListManager.getInstance().getFXLists().stream();
-        Predicate<PackageList> filterPredicate = pkgList -> {
+        Stream<PackageListFX> pkgListStream = ListManagerFX.getInstance().getFXLists().stream();
+        Predicate<PackageListFX> filterPredicate = pkgList -> {
             switch (filterAttribute) {
                 case "All Attributes":
                     return (pkgList.getName() + " " + pkgList.getSize()).toLowerCase().contains(filterText);
@@ -222,7 +222,7 @@ public class ListManagerController {
             }
         };
 
-        ObservableList<PackageList> filteredList = pkgListStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<PackageListFX> filteredList = pkgListStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         tableView_packageLists.setItems(filteredList);
     }

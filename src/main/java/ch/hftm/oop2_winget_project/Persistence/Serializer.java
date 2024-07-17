@@ -1,9 +1,9 @@
 package ch.hftm.oop2_winget_project.Persistence;
 
 import ch.hftm.oop2_winget_project.App;
+import ch.hftm.oop2_winget_project.Model.ListManagerFX;
 import ch.hftm.oop2_winget_project.Model.ListManager;
-import ch.hftm.oop2_winget_project.Model.ListManagerDTO;
-import ch.hftm.oop2_winget_project.Model.WinGetSettings;
+import ch.hftm.oop2_winget_project.Model.Settings;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -20,7 +20,7 @@ public class Serializer {
 //  The DTOConverter class handles the conversion between model and DTO instances.
 
     private static final Logger LOGGER = Logger.getLogger(DTOConverter.class.getName());
-    private static final WinGetSettings winGetSettings = App.getAppInstance().getWinGetSettings();
+    private static final Settings winGetSettings = App.getAppInstance().getWinGetSettings();
     private static String directoryPath = winGetSettings.getDirectoryPath();
     private static String filePath = winGetSettings.getSerializePath();
 
@@ -45,10 +45,10 @@ public class Serializer {
 
     // Serializes (saves) the listManager.
     public static void serializeListManager() {
-        ListManager listManager = ListManager.getInstance();
+        ListManagerFX listManager = ListManagerFX.getInstance();
 
         // printModels("Current ListManager: "); // For debugging.
-        ListManagerDTO listManagerDTO = DTOConverter.toListManagerDTO(listManager); // Convert ListManager to ListManagerDTO.
+        ListManager listManagerDTO = DTOConverter.toListManager(listManager); // Convert ListManager to ListManagerDTO.
         // printDTOs("Current ListManagerDTO: "); // For debugging.
 
         // Serialize the listManager to .ser file.
@@ -66,13 +66,13 @@ public class Serializer {
 
     // Deserializes (loads) the listManager.
     public static void deserializeListManager() {
-        ListManagerDTO listManagerDTO = ListManagerDTO.getInstance();
+        ListManager listManagerDTO = ListManager.getInstance();
 
         // Deserialize the ListManagerDTO from .ser file.
         System.out.println("Serializer: Deserialization of ListManagerDTO starting.");
         LOGGER.log(Level.INFO, "Deserialization of ListManagerDTO starting.");
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            listManagerDTO = (ListManagerDTO) ois.readObject();
+            listManagerDTO = (ListManager) ois.readObject();
             System.out.println("Serializer: Deserialization of ListManagerDTO successful.");
             LOGGER.log(Level.INFO, "Deserialization of ListManagerDTO successful.");
         } catch (ClassNotFoundException | FileNotFoundException e) {
@@ -84,14 +84,14 @@ public class Serializer {
             LOGGER.log(Level.WARNING, "Deserialization of ListManagerDTO failed: {0}", e.getMessage());
         }
         // printDTOs("Current ListManagerDTO: "); // For debugging.
-        DTOConverter.fromListManagerDTO(listManagerDTO); // Convert ListManagerDTO to ListManager.
+        DTOConverter.toListManagerFX(listManagerDTO); // Convert ListManagerDTO to ListManager.
         // printModels("Current ListManager: "); // For debugging.
     }
 
     // Prints out the model instances. For debugging.
     private static void printModels(String str) {
         System.out.println("\n" + str);
-        ListManager listManager = ListManager.getInstance();
+        ListManagerFX listManager = ListManagerFX.getInstance();
         listManager.getLists().forEach(packageList -> {
             System.out.println("PackageList: " + packageList.getName() + ", Packages: " + packageList.getFXPackages().size());
             packageList.getFXPackages().forEach(winGetPackage -> System.out.println(" - WinGetPackage: " + winGetPackage.getName() + " " +  winGetPackage.getId() + " " + winGetPackage.getVersion() + " " + winGetPackage.getSource()));
@@ -101,7 +101,7 @@ public class Serializer {
     // Prints out the DTO instances. For debugging.
     private static void printDTOs(String str) {
         System.out.println("\n" + str);
-        ListManagerDTO listManagerDTO = ListManagerDTO.getInstance();
+        ListManager listManagerDTO = ListManager.getInstance();
         listManagerDTO.getList().forEach(packageListDTO -> {
             System.out.println("PackageListDTO: " + packageListDTO.getName() + ", Packages: " + packageListDTO.getPackages().size());
             packageListDTO.getPackages().forEach(winGetPackageDTO -> System.out.println(" - WinGetPackageDTO: " + winGetPackageDTO.getName() + " " + winGetPackageDTO.getId() + " " + winGetPackageDTO.getVersion() + " " + winGetPackageDTO.getSource()));

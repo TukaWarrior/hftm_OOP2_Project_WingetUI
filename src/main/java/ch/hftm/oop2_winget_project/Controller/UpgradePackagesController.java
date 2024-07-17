@@ -1,8 +1,8 @@
 package ch.hftm.oop2_winget_project.Controller;
 
 import ch.hftm.oop2_winget_project.Api.IControllerBase;
-import ch.hftm.oop2_winget_project.Model.PackageList;
-import ch.hftm.oop2_winget_project.Model.WinGetPackage;
+import ch.hftm.oop2_winget_project.Model.PackageListFX;
+import ch.hftm.oop2_winget_project.Model.WinGetPackageFX;
 import ch.hftm.oop2_winget_project.Model.WinGetQuery;
 import ch.hftm.oop2_winget_project.Util.ConsoleExitCode;
 import ch.hftm.oop2_winget_project.Util.QueryType;
@@ -29,19 +29,19 @@ import java.util.stream.Stream;
 public class UpgradePackagesController implements IControllerBase, Initializable
 {
     @FXML
-    private TableView<WinGetPackage> tableView_upgradePackages;
+    private TableView<WinGetPackageFX> tableView_upgradePackages;
     @FXML
-    private TableColumn<WinGetPackage, String> column_id;
+    private TableColumn<WinGetPackageFX, String> column_id;
     @FXML
-    private TableColumn<WinGetPackage, String> column_name;
+    private TableColumn<WinGetPackageFX, String> column_name;
     @FXML
-    private TableColumn<WinGetPackage, String> column_source;
+    private TableColumn<WinGetPackageFX, String> column_source;
     @FXML
-    private TableColumn<WinGetPackage, String> column_installedVersion;
+    private TableColumn<WinGetPackageFX, String> column_installedVersion;
     @FXML
-    private TableColumn<WinGetPackage, String> column_availableVersion;
+    private TableColumn<WinGetPackageFX, String> column_availableVersion;
     @FXML
-    private TableColumn<WinGetPackage, Void> column_action;
+    private TableColumn<WinGetPackageFX, Void> column_action;
     @FXML
     private Label tableViewPlaceholderLabel;
     @FXML
@@ -80,13 +80,13 @@ public class UpgradePackagesController implements IControllerBase, Initializable
     private void setCollectionListenerForPackageCountLabel(){
         // Add a ListChangeListener to the ObservableList
         tableViewPackageCountLabel.setVisible(false);
-        PackageList.getUpgradePackageList().addListener((ListChangeListener<WinGetPackage>) change -> {
-            if(PackageList.getUpgradePackageList().isEmpty()){
+        PackageListFX.getUpgradePackageList().addListener((ListChangeListener<WinGetPackageFX>) change -> {
+            if(PackageListFX.getUpgradePackageList().isEmpty()){
                 tableViewPackageCountLabel.setVisible(false);
             }
             else {
                 tableViewPackageCountLabel.setVisible(true);
-                tableViewPackageCountLabel.setText(PackageList.getUpgradePackageList().size() + " Updates available");
+                tableViewPackageCountLabel.setText(PackageListFX.getUpgradePackageList().size() + " Updates available");
             }
         });
     }
@@ -114,7 +114,7 @@ public class UpgradePackagesController implements IControllerBase, Initializable
                 Platform.runLater(() -> {
                     if (query.getConsoleExitCode() == ConsoleExitCode.OK.getValue())
                     {
-                        query.CreateUpdateList(PackageList.getUpgradePackageList());
+                        query.CreateUpdateList(PackageListFX.getUpgradePackageList());
 
                         refreshTableViewContent();
                     }
@@ -139,7 +139,7 @@ public class UpgradePackagesController implements IControllerBase, Initializable
 
     @Override
     public void setTableViewSource() {
-        this.tableView_upgradePackages.setItems(PackageList.getUpgradePackageList());
+        this.tableView_upgradePackages.setItems(PackageListFX.getUpgradePackageList());
     }
 
     @Override
@@ -149,23 +149,23 @@ public class UpgradePackagesController implements IControllerBase, Initializable
     }
 
     @Override
-    public WinGetPackage getObjectFromSelection() {
+    public WinGetPackageFX getObjectFromSelection() {
         return tableView_upgradePackages.getSelectionModel().getSelectedItem();
     }
 
     @Override
     public void addButtonToTableView() {
-        Callback<TableColumn<WinGetPackage, Void>, TableCell<WinGetPackage, Void>> cellFactory = new Callback<>()
+        Callback<TableColumn<WinGetPackageFX, Void>, TableCell<WinGetPackageFX, Void>> cellFactory = new Callback<>()
         {
             @Override
-            public TableCell<WinGetPackage, Void> call(final TableColumn<WinGetPackage, Void> param)
+            public TableCell<WinGetPackageFX, Void> call(final TableColumn<WinGetPackageFX, Void> param)
             {
-                final TableCell<WinGetPackage, Void> cell = new TableCell<>()
+                final TableCell<WinGetPackageFX, Void> cell = new TableCell<>()
                 {
                     private final Button btn = new Button("Update");
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            WinGetPackage selectedItem = getTableView().getItems().get(getIndex());
+                            WinGetPackageFX selectedItem = getTableView().getItems().get(getIndex());
 
                             btn.setDisable(true); // Disables button when clicked and package updates
                             isThreadWorking = true;
@@ -184,7 +184,7 @@ public class UpgradePackagesController implements IControllerBase, Initializable
                                     // Update installed packages list
                                     setNewPackageVersion(selectedItem);
                                     // Remove package from list after update
-                                    PackageList.getUpgradePackageList().remove(selectedItem);
+                                    PackageListFX.getUpgradePackageList().remove(selectedItem);
                                     isThreadWorking = false;
                                 });
                             }).start();
@@ -256,8 +256,8 @@ public class UpgradePackagesController implements IControllerBase, Initializable
         });
     }
 
-    private void setNewPackageVersion(WinGetPackage pkg){
-        for(var installedPackage : PackageList.getInstalledPackageList()){
+    private void setNewPackageVersion(WinGetPackageFX pkg){
+        for(var installedPackage : PackageListFX.getInstalledPackageList()){
             if(installedPackage.getId().equals(pkg.getId())){
                 installedPackage.setVersion(pkg.getUpdateVersion());
                 break;
@@ -276,12 +276,12 @@ public class UpgradePackagesController implements IControllerBase, Initializable
         String selectedAttribute = comboBox_filter.getValue();
 
         if (filterText.isEmpty() || selectedAttribute == null) {
-            tableView_upgradePackages.setItems(PackageList.getUpgradePackageList());
+            tableView_upgradePackages.setItems(PackageListFX.getUpgradePackageList());
             return;
         }
 
-        Stream<WinGetPackage> pkgStream = PackageList.getUpgradePackageList().stream();
-        Predicate<WinGetPackage> filterPredicate = pkg -> {
+        Stream<WinGetPackageFX> pkgStream = PackageListFX.getUpgradePackageList().stream();
+        Predicate<WinGetPackageFX> filterPredicate = pkg -> {
             switch (selectedAttribute) {
                 case "All Attributes":
                     return (pkg.getName() + " " + pkg.getId() + " " + pkg.getSource() + " " + pkg.getVersion()).toLowerCase().contains(filterText);
@@ -298,7 +298,7 @@ public class UpgradePackagesController implements IControllerBase, Initializable
             }
         };
 
-        ObservableList<WinGetPackage> filteredList = pkgStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<WinGetPackageFX> filteredList = pkgStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         if(filteredList.isEmpty()){
             setTableViewPlaceholder("No Packages found", false);

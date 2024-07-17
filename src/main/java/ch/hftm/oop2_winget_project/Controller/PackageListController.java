@@ -1,8 +1,8 @@
 package ch.hftm.oop2_winget_project.Controller;
 
-import ch.hftm.oop2_winget_project.Model.ListManager;
-import ch.hftm.oop2_winget_project.Model.PackageList;
-import ch.hftm.oop2_winget_project.Model.WinGetPackage;
+import ch.hftm.oop2_winget_project.Model.ListManagerFX;
+import ch.hftm.oop2_winget_project.Model.PackageListFX;
+import ch.hftm.oop2_winget_project.Model.WinGetPackageFX;
 import ch.hftm.oop2_winget_project.Persistence.Serializer;
 import ch.hftm.oop2_winget_project.Util.QueryType;
 import ch.hftm.oop2_winget_project.Util.SourceType;
@@ -22,23 +22,23 @@ import java.util.stream.Stream;
 
 public class PackageListController {
 
-    private ListManager listManager;
-    private PackageList currentPackageList;
+    private ListManagerFX listManager;
+    private PackageListFX currentPackageList;
 
     @FXML
     private Button button_removePackageFromList;
     @FXML
-    private TableView<WinGetPackage> tableView_packages;
+    private TableView<WinGetPackageFX> tableView_packages;
     @FXML
-    private TableColumn<WinGetPackage, String> column_id;
+    private TableColumn<WinGetPackageFX, String> column_id;
     @FXML
-    private TableColumn<WinGetPackage, String> column_name;
+    private TableColumn<WinGetPackageFX, String> column_name;
     @FXML
-    private TableColumn<WinGetPackage, String> column_source;
+    private TableColumn<WinGetPackageFX, String> column_source;
     @FXML
-    private TableColumn<WinGetPackage, String> column_version;
+    private TableColumn<WinGetPackageFX, String> column_version;
     @FXML
-    private TableColumn<WinGetPackage, Void> column_install;
+    private TableColumn<WinGetPackageFX, Void> column_install;
     @FXML
     private ComboBox<String> comboBox_filter;
     @FXML
@@ -52,7 +52,7 @@ public class PackageListController {
     @FXML
     private void initialize() {
 
-        listManager = ListManager.getInstance(); //Getting the single instance of ListManager.
+        listManager = ListManagerFX.getInstance(); //Getting the single instance of ListManager.
         currentPackageList = listManager.getSelectedPackageList();
 //        System.out.println(listManager.getSelectedPackageList());
 //        System.out.println("Packages in the list: " + currentPackageList.getFXPackages().size());
@@ -95,7 +95,7 @@ public class PackageListController {
 
     @FXML
     private void button_removePackageFromList() {
-        WinGetPackage selectedPackage = tableView_packages.getSelectionModel().getSelectedItem();
+        WinGetPackageFX selectedPackage = tableView_packages.getSelectionModel().getSelectedItem();
         if (selectedPackage != null) {
             currentPackageList.removePackage(selectedPackage);
             System.out.println("Package removed: " + selectedPackage.getName());
@@ -114,8 +114,8 @@ public class PackageListController {
             return;
         }
 
-        Stream<WinGetPackage> pkgStream = currentPackageList.getFXPackages().stream();
-        Predicate<WinGetPackage> filterPredicate = pkg -> {
+        Stream<WinGetPackageFX> pkgStream = currentPackageList.getFXPackages().stream();
+        Predicate<WinGetPackageFX> filterPredicate = pkg -> {
             switch (selectedAttribute) {
                 case "All Attributes":
                     return (pkg.getName() + " " + pkg.getId() + " " + pkg.getSource() + " " + pkg.getVersion()).toLowerCase().contains(filterText);
@@ -132,7 +132,7 @@ public class PackageListController {
             }
         };
 
-        ObservableList<WinGetPackage> filteredList = pkgStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<WinGetPackageFX> filteredList = pkgStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         tableView_packages.setItems(filteredList);
     }
@@ -170,19 +170,19 @@ public class PackageListController {
 //    @Override
     public void addButtonToTableView()
     {
-        Callback<TableColumn<WinGetPackage, Void>, TableCell<WinGetPackage, Void>> cellFactory = new Callback<>()
+        Callback<TableColumn<WinGetPackageFX, Void>, TableCell<WinGetPackageFX, Void>> cellFactory = new Callback<>()
         {
             @Override
-            public TableCell<WinGetPackage, Void> call(final TableColumn<WinGetPackage, Void> param)
+            public TableCell<WinGetPackageFX, Void> call(final TableColumn<WinGetPackageFX, Void> param)
             {
                 Label installedLabel = new Label("Installed");
                 installedLabel.getStyleClass().removeAll("label-installed"); // Reset styles
-                final TableCell<WinGetPackage, Void> cell = new TableCell<>()
+                final TableCell<WinGetPackageFX, Void> cell = new TableCell<>()
                 {
                     private final Button btn = new Button("Install");
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            WinGetPackage selectedItem = getTableView().getItems().get(getIndex());
+                            WinGetPackageFX selectedItem = getTableView().getItems().get(getIndex());
 
                             btn.setDisable(true); // Disables button when clicked and package installs
                             isThreadWorking = true;
@@ -199,7 +199,7 @@ public class PackageListController {
 
                                 Platform.runLater(() -> {
                                     // Update list
-                                    PackageList.getInstalledPackageList().add(selectedItem);
+                                    PackageListFX.getInstalledPackageList().add(selectedItem);
                                     selectedItem.setInstalled(true); // Set package as installed
                                     installedLabel.getStyleClass().add("label-installed");
                                     setGraphic(installedLabel);
@@ -215,7 +215,7 @@ public class PackageListController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            WinGetPackage selectedItem = getTableView().getItems().get(getIndex());
+                            WinGetPackageFX selectedItem = getTableView().getItems().get(getIndex());
                             if(selectedItem.isInstalled()) {
                                 // Set cell content when package is installed already
                                 installedLabel.getStyleClass().add("label-installed");

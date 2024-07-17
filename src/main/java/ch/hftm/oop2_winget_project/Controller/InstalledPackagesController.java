@@ -2,9 +2,9 @@ package ch.hftm.oop2_winget_project.Controller;
 
 import ch.hftm.oop2_winget_project.Api.IControllerBase;
 import ch.hftm.oop2_winget_project.Model.Message;
-import ch.hftm.oop2_winget_project.Model.PackageList;
+import ch.hftm.oop2_winget_project.Model.PackageListFX;
 import ch.hftm.oop2_winget_project.Util.QueryType;
-import ch.hftm.oop2_winget_project.Model.WinGetPackage;
+import ch.hftm.oop2_winget_project.Model.WinGetPackageFX;
 import ch.hftm.oop2_winget_project.Model.WinGetQuery;
 import ch.hftm.oop2_winget_project.Util.ConsoleExitCode;
 import ch.hftm.oop2_winget_project.Util.SourceType;
@@ -30,17 +30,17 @@ import java.util.stream.Stream;
 public class InstalledPackagesController implements IControllerBase, Initializable
 {
     @FXML
-    private TableView<WinGetPackage> tableView_installedPackages;
+    private TableView<WinGetPackageFX> tableView_installedPackages;
     @FXML
-    private TableColumn<WinGetPackage, String> column_id;
+    private TableColumn<WinGetPackageFX, String> column_id;
     @FXML
-    private TableColumn<WinGetPackage, String> column_name;
+    private TableColumn<WinGetPackageFX, String> column_name;
     @FXML
-    private TableColumn<WinGetPackage, String> column_source;
+    private TableColumn<WinGetPackageFX, String> column_source;
     @FXML
-    private TableColumn<WinGetPackage, String> column_version;
+    private TableColumn<WinGetPackageFX, String> column_version;
     @FXML
-    private TableColumn<WinGetPackage, Void> column_action;
+    private TableColumn<WinGetPackageFX, Void> column_action;
     @FXML
     private Label tableViewPlaceholderLabel;
     @FXML
@@ -79,13 +79,13 @@ public class InstalledPackagesController implements IControllerBase, Initializab
     private void setCollectionListenerForPackageCountLabel(){
         // Add a ListChangeListener to the ObservableList
         tableViewPackageCountLabel.setVisible(false);
-        PackageList.getInstalledPackageList().addListener((ListChangeListener<WinGetPackage>) change -> {
-            if(PackageList.getInstalledPackageList().isEmpty()){
+        PackageListFX.getInstalledPackageList().addListener((ListChangeListener<WinGetPackageFX>) change -> {
+            if(PackageListFX.getInstalledPackageList().isEmpty()){
                 tableViewPackageCountLabel.setVisible(false);
             }
             else {
                 tableViewPackageCountLabel.setVisible(true);
-                tableViewPackageCountLabel.setText(PackageList.getInstalledPackageList().size() + " Packages installed");
+                tableViewPackageCountLabel.setText(PackageListFX.getInstalledPackageList().size() + " Packages installed");
             }
         });
     }
@@ -108,7 +108,7 @@ public class InstalledPackagesController implements IControllerBase, Initializab
     @Override
     public void setTableViewSource()
     {
-        this.tableView_installedPackages.setItems(PackageList.getInstalledPackageList());
+        this.tableView_installedPackages.setItems(PackageListFX.getInstalledPackageList());
     }
 
     @Override
@@ -119,7 +119,7 @@ public class InstalledPackagesController implements IControllerBase, Initializab
     }
 
     @Override
-    public WinGetPackage getObjectFromSelection()
+    public WinGetPackageFX getObjectFromSelection()
     {
         return tableView_installedPackages.getSelectionModel().getSelectedItem();
     }
@@ -127,17 +127,17 @@ public class InstalledPackagesController implements IControllerBase, Initializab
     @Override
     public void addButtonToTableView()
     {
-        Callback<TableColumn<WinGetPackage, Void>, TableCell<WinGetPackage, Void>> cellFactory = new Callback<>()
+        Callback<TableColumn<WinGetPackageFX, Void>, TableCell<WinGetPackageFX, Void>> cellFactory = new Callback<>()
         {
             @Override
-            public TableCell<WinGetPackage, Void> call(final TableColumn<WinGetPackage, Void> param)
+            public TableCell<WinGetPackageFX, Void> call(final TableColumn<WinGetPackageFX, Void> param)
             {
-                final TableCell<WinGetPackage, Void> cell = new TableCell<>()
+                final TableCell<WinGetPackageFX, Void> cell = new TableCell<>()
                 {
                     private final Button btn = new Button("Uninstall");
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            WinGetPackage selectedItem = getTableView().getItems().get(getIndex());
+                            WinGetPackageFX selectedItem = getTableView().getItems().get(getIndex());
 
                             if (Message.showConfirmationDialog("Do you really want to uninstall " + selectedItem.getName(), "Confirm uninstall") == ButtonBar.ButtonData.YES) {
                                 isThreadWorking = true;
@@ -155,7 +155,7 @@ public class InstalledPackagesController implements IControllerBase, Initializab
                                     Platform.runLater(() -> {
                                         selectedItem.setInstalled(false); // Set package as uninstalled
                                         // Update list
-                                        PackageList.getInstalledPackageList().remove(selectedItem);
+                                        PackageListFX.getInstalledPackageList().remove(selectedItem);
                                         setGraphic(null);
                                         textField_filter.clear();
                                         isThreadWorking = false;
@@ -240,7 +240,7 @@ public class InstalledPackagesController implements IControllerBase, Initializab
                 Platform.runLater(() -> {
                     if (query.getConsoleExitCode() == ConsoleExitCode.OK.getValue())
                     {
-                        query.CreatePackageList(PackageList.getInstalledPackageList());
+                        query.CreatePackageList(PackageListFX.getInstalledPackageList());
                         refreshTableViewContent();
                     }
                     else
@@ -283,12 +283,12 @@ public class InstalledPackagesController implements IControllerBase, Initializab
         String selectedAttribute = comboBox_filter.getValue();
 
         if (filterText.isEmpty() || selectedAttribute == null) {
-            tableView_installedPackages.setItems(PackageList.getInstalledPackageList());
+            tableView_installedPackages.setItems(PackageListFX.getInstalledPackageList());
             return;
         }
 
-        Stream<WinGetPackage> pkgStream = PackageList.getInstalledPackageList().stream();
-        Predicate<WinGetPackage> filterPredicate = pkg -> {
+        Stream<WinGetPackageFX> pkgStream = PackageListFX.getInstalledPackageList().stream();
+        Predicate<WinGetPackageFX> filterPredicate = pkg -> {
             switch (selectedAttribute) {
                 case "All Attributes":
                     return (pkg.getName() + " " + pkg.getId() + " " + pkg.getSource() + " " + pkg.getVersion()).toLowerCase().contains(filterText);
@@ -305,7 +305,7 @@ public class InstalledPackagesController implements IControllerBase, Initializab
             }
         };
 
-        ObservableList<WinGetPackage> filteredList = pkgStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<WinGetPackageFX> filteredList = pkgStream.filter(filterPredicate).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         if(filteredList.isEmpty()){
             setTableViewPlaceholder("No Packages found", false);

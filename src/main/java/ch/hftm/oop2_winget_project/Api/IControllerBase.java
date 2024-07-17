@@ -1,12 +1,12 @@
 package ch.hftm.oop2_winget_project.Api;
 
-import ch.hftm.oop2_winget_project.Model.WinGetPackage;
+import ch.hftm.oop2_winget_project.Model.WinGetPackageFX;
 
 public interface IControllerBase
 {
     void setTableViewData();
     void setTableViewSource();
     void refreshTableViewContent();
-    WinGetPackage getObjectFromSelection();
+    WinGetPackageFX getObjectFromSelection();
     void addButtonToTableView();
 }

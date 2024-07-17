@@ -1,7 +1,7 @@
 package ch.hftm.oop2_winget_project.Persistence;
 
-import ch.hftm.oop2_winget_project.Model.WinGetPackage;
-import ch.hftm.oop2_winget_project.Model.PackageList;
+import ch.hftm.oop2_winget_project.Model.WinGetPackageFX;
+import ch.hftm.oop2_winget_project.Model.PackageListFX;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,7 +16,7 @@ public class BatchFileCreator {
 
     private static Logger LOGGER = Logger.getLogger(DTOConverter.class.getName());
 
-    public static void createInstallScript(PackageList packageList) {
+    public static void createInstallScript(PackageListFX packageList) {
         LOGGER.log(Level.INFO, "Batch file creation starting.");
 
         // Set the script path.
@@ -63,7 +63,7 @@ public class BatchFileCreator {
             bw.write("echo Name     PackageID     Version     Source");
             bw.newLine();
             bw.write("echo ----------------------------------------------");
-            for (WinGetPackage pkg : packageList.getPackages()) {
+            for (WinGetPackageFX pkg : packageList.getPackages()) {
                 bw.newLine();
                 bw.write("echo " + String.format(pkg.getName() + "     " + pkg.getId() + "     " + pkg.getVersion() + "     " + pkg.getSource()));
             }
@@ -115,7 +115,7 @@ public class BatchFileCreator {
             bw.write("echo.");
             bw.newLine();
             bw.write(":doinstall");
-            for (WinGetPackage pkg : packageList.getPackages()) {
+            for (WinGetPackageFX pkg : packageList.getPackages()) {
                 String packageId = pkg.getId();
                 bw.newLine();
                 bw.write(String.format("winget install --id=" + packageId + " --silent --accept-package-agreements --accept-source-agreements"));
@@ -138,7 +138,7 @@ public class BatchFileCreator {
             bw.write("echo.");
             bw.newLine();
             bw.write(":doupdate");
-            for (WinGetPackage pkg : packageList.getPackages()) {
+            for (WinGetPackageFX pkg : packageList.getPackages()) {
                 String packageId = pkg.getId();
                 bw.newLine();
                 bw.write(String.format("winget update --id=" + packageId + " --silent --accept-package-agreements --accept-source-agreements"));
@@ -161,7 +161,7 @@ public class BatchFileCreator {
             bw.write("echo.");
             bw.newLine();
             bw.write(":doremove");
-            for (WinGetPackage pkg : packageList.getPackages()) {
+            for (WinGetPackageFX pkg : packageList.getPackages()) {
                 String packageId = pkg.getId();
                 bw.newLine();
                 bw.write(String.format("winget remove --id=" + packageId + " --silent"));

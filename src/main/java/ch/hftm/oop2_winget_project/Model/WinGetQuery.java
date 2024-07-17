@@ -62,7 +62,7 @@ public class WinGetQuery
         consoleExitCode = process.waitFor();
     }
 
-    public void CreatePackageList(ObservableList<WinGetPackage> packageList)
+    public void CreatePackageList(ObservableList<WinGetPackageFX> packageList)
     {
         for(String line : rawDataList)
         {
@@ -106,7 +106,7 @@ public class WinGetQuery
                     packageVersion = line.substring(columnSeparatorIndexVersion, columnSeparatorIndexSource).trim();
                 }
 
-                WinGetPackage winGetPackage = new WinGetPackage(
+                WinGetPackageFX winGetPackage = new WinGetPackageFX(
                         line.substring(0, columnSeparatorIndexId).trim(), // Package Name
                         line.substring(columnSeparatorIndexId, columnSeparatorIndexVersion).trim(), // Package ID
                         packageVersion,
@@ -123,7 +123,7 @@ public class WinGetQuery
         }
     }
 
-    public void CreateUpdateList(ObservableList<WinGetPackage> packageList)
+    public void CreateUpdateList(ObservableList<WinGetPackageFX> packageList)
     {
         for(String line : rawDataList)
         {
@@ -155,7 +155,7 @@ public class WinGetQuery
                     line = ManipulateHanLine(line);
                 }
 
-                WinGetPackage winGetPackage = new WinGetPackage(
+                WinGetPackageFX winGetPackage = new WinGetPackageFX(
                         line.substring(0, columnSeparatorIndexId).trim(), // Package Name
                         line.substring(columnSeparatorIndexId, columnSeparatorIndexVersion).trim(), // Package ID
                         line.substring(columnSeparatorIndexVersion, columnSeparatorIndexAvailableOrMatch).trim(), // Package version
@@ -178,9 +178,9 @@ public class WinGetQuery
         return line.substring(0, columnSeparatorIndexId-missingLength) + uglyPatch + line.substring(columnSeparatorIndexId-missingLength);
     }
 
-    private void SetInstalledPackage(WinGetPackage winGetPackage)
+    private void SetInstalledPackage(WinGetPackageFX winGetPackage)
     {
-        for(WinGetPackage installedPackage : PackageList.getInstalledPackageList())
+        for(WinGetPackageFX installedPackage : PackageListFX.getInstalledPackageList())
         {
             if(installedPackage.getId().equals(winGetPackage.getId()))
             {

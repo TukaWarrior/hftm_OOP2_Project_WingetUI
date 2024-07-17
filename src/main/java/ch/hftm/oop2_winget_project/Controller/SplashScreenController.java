@@ -2,7 +2,7 @@ package ch.hftm.oop2_winget_project.Controller;
 
 import ch.hftm.oop2_winget_project.App;
 import ch.hftm.oop2_winget_project.Model.Message;
-import ch.hftm.oop2_winget_project.Model.PackageList;
+import ch.hftm.oop2_winget_project.Model.PackageListFX;
 import ch.hftm.oop2_winget_project.Model.WinGetQuery;
 import ch.hftm.oop2_winget_project.Model.WindowManager;
 import ch.hftm.oop2_winget_project.Util.QueryType;
@@ -49,8 +49,8 @@ public class SplashScreenController implements Initializable
             }
 
             Platform.runLater(() -> {
-                installedPackages.CreatePackageList(PackageList.getInstalledPackageList());
-                availableUpdates.CreateUpdateList(PackageList.getUpgradePackageList());
+                installedPackages.CreatePackageList(PackageListFX.getInstalledPackageList());
+                availableUpdates.CreateUpdateList(PackageListFX.getUpgradePackageList());
                 Stage stage = new Stage();
 
                 // WindowManager instance for Window Actions

@@ -22,9 +22,9 @@ public class App extends Application
     private static Stage mainStage;
     private static MainWindowController mainWindowController;
     private WindowManager windowManager;
-    private WinGetSettings winGetSettings;
-    public ListManager listManager;
-    public ListManagerDTO listManagerDTO;
+    private Settings winGetSettings;
+    public ListManagerFX listManager;
+    public ListManager listManagerDTO;
 
 
     /*
@@ -47,7 +47,7 @@ public class App extends Application
         // Set application instance
         appInstance = this;
 
-        winGetSettings = new WinGetSettings();
+        winGetSettings = new Settings();
         winGetSettings.setWinGetLanguage();
         initializeLogDirectory();
     }
@@ -55,8 +55,8 @@ public class App extends Application
     @Override // Starts up the JavaFX UI. (main > init > star)
     public void start(Stage stage) throws IOException
     {
-        listManager = ListManager.getInstance(); // Instantiating ListManager
-        listManagerDTO = ListManagerDTO.getInstance(); // Instantiating ListManager
+        listManager = ListManagerFX.getInstance(); // Instantiating ListManager
+        listManagerDTO = ListManager.getInstance(); // Instantiating ListManager
 
         Serializer.deserializeListManager(); // Converts .ser into listManager
         checkIfFavouriteListExists();
@@ -97,7 +97,7 @@ public class App extends Application
     {
         return windowManager;
     }
-    public WinGetSettings getWinGetSettings()
+    public Settings getWinGetSettings()
     {
         return winGetSettings;
     }
@@ -132,7 +132,7 @@ public class App extends Application
 
     private void checkIfFavouriteListExists() {
         boolean listExists = false;
-        for (PackageList list : ListManager.getInstance().getLists()) {
+        for (PackageListFX list : ListManagerFX.getInstance().getLists()) {
             if ("favourite-list-uuid".equals(list.getId())) {
                 listExists = true;
                 break; // Exit the loop as we found the matching list

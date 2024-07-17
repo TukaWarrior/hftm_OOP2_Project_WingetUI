@@ -24,19 +24,19 @@ import java.util.ResourceBundle;
 public class SearchPackagesController implements IControllerBase, Initializable
 {
     @FXML
-    private TableView<WinGetPackage> tableView_searchPackages;
+    private TableView<WinGetPackageFX> tableView_searchPackages;
     @FXML
-    private TableColumn<WinGetPackage, Boolean> column_favourite;
+    private TableColumn<WinGetPackageFX, Boolean> column_favourite;
     @FXML
-    private TableColumn<WinGetPackage, String> column_id;
+    private TableColumn<WinGetPackageFX, String> column_id;
     @FXML
-    private TableColumn<WinGetPackage, String> column_name;
+    private TableColumn<WinGetPackageFX, String> column_name;
     @FXML
-    private TableColumn<WinGetPackage, String> column_source;
+    private TableColumn<WinGetPackageFX, String> column_source;
     @FXML
-    private TableColumn<WinGetPackage, String> column_version;
+    private TableColumn<WinGetPackageFX, String> column_version;
     @FXML
-    private TableColumn<WinGetPackage, Void> column_action;
+    private TableColumn<WinGetPackageFX, Void> column_action;
     @FXML
     private TextField keywordTextField;
     @FXML
@@ -46,11 +46,11 @@ public class SearchPackagesController implements IControllerBase, Initializable
     @FXML
     private Label tableViewPackageCountLabel;
     @FXML
-    private ComboBox<PackageList> comboBox_selectPackageList; // The comboBox for PackageList selection
+    private ComboBox<PackageListFX> comboBox_selectPackageList; // The comboBox for PackageList selection
     @FXML
     private Button button_addPackageToList;
     private boolean isThreadWorking;
-    private PackageList selectedPackageList; // Stores the selected PackageList from the comboBox.
+    private PackageListFX selectedPackageList; // Stores the selected PackageList from the comboBox.
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -87,7 +87,7 @@ public class SearchPackagesController implements IControllerBase, Initializable
     @Override
     public void setTableViewSource()
     {
-        this.tableView_searchPackages.setItems(PackageList.getSearchPackageList());
+        this.tableView_searchPackages.setItems(PackageListFX.getSearchPackageList());
     }
 
     @Override
@@ -114,19 +114,19 @@ public class SearchPackagesController implements IControllerBase, Initializable
     private void setCollectionListenerForPackageCountLabel(){
         // Add a ListChangeListener to the ObservableList
         tableViewPackageCountLabel.setVisible(false);
-        PackageList.getSearchPackageList().addListener((ListChangeListener<WinGetPackage>) change -> {
-            if(PackageList.getSearchPackageList().isEmpty()){
+        PackageListFX.getSearchPackageList().addListener((ListChangeListener<WinGetPackageFX>) change -> {
+            if(PackageListFX.getSearchPackageList().isEmpty()){
                 tableViewPackageCountLabel.setVisible(false);
             }
             else {
                 tableViewPackageCountLabel.setVisible(true);
-                tableViewPackageCountLabel.setText(PackageList.getSearchPackageList().size() + " Packages found");
+                tableViewPackageCountLabel.setText(PackageListFX.getSearchPackageList().size() + " Packages found");
             }
         });
     }
 
     @Override
-    public WinGetPackage getObjectFromSelection()
+    public WinGetPackageFX getObjectFromSelection()
     {
         return tableView_searchPackages.getSelectionModel().getSelectedItem();
     }
@@ -134,19 +134,19 @@ public class SearchPackagesController implements IControllerBase, Initializable
     @Override
     public void addButtonToTableView()
     {
-        Callback<TableColumn<WinGetPackage, Void>, TableCell<WinGetPackage, Void>> cellFactory = new Callback<>()
+        Callback<TableColumn<WinGetPackageFX, Void>, TableCell<WinGetPackageFX, Void>> cellFactory = new Callback<>()
         {
             @Override
-            public TableCell<WinGetPackage, Void> call(final TableColumn<WinGetPackage, Void> param)
+            public TableCell<WinGetPackageFX, Void> call(final TableColumn<WinGetPackageFX, Void> param)
             {
                 Label installedLabel = new Label("Installed");
                 installedLabel.getStyleClass().removeAll("label-installed"); // Reset styles
-                final TableCell<WinGetPackage, Void> cell = new TableCell<>()
+                final TableCell<WinGetPackageFX, Void> cell = new TableCell<>()
                 {
                     private final Button btn = new Button("Install");
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            WinGetPackage selectedItem = getTableView().getItems().get(getIndex());
+                            WinGetPackageFX selectedItem = getTableView().getItems().get(getIndex());
 
                             btn.setDisable(true); // Disables button when clicked and package installs
                             isThreadWorking = true;
@@ -163,7 +163,7 @@ public class SearchPackagesController implements IControllerBase, Initializable
 
                                 Platform.runLater(() -> {
                                     // Update list
-                                    PackageList.getInstalledPackageList().add(selectedItem);
+                                    PackageListFX.getInstalledPackageList().add(selectedItem);
                                     selectedItem.setInstalled(true); // Set package as installed
                                     installedLabel.getStyleClass().add("label-installed");
                                     setGraphic(installedLabel);
@@ -179,7 +179,7 @@ public class SearchPackagesController implements IControllerBase, Initializable
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            WinGetPackage selectedItem = getTableView().getItems().get(getIndex());
+                            WinGetPackageFX selectedItem = getTableView().getItems().get(getIndex());
                             if(selectedItem.isInstalled()) {
                                 // Set cell content when package is installed already
                                 installedLabel.getStyleClass().add("label-installed");
@@ -227,7 +227,7 @@ public class SearchPackagesController implements IControllerBase, Initializable
     }
 
     private void addFavoriteCheckboxToTableView() {
-        column_favourite.setCellFactory(column -> new CheckBoxTableCell<WinGetPackage, Boolean>() {
+        column_favourite.setCellFactory(column -> new CheckBoxTableCell<WinGetPackageFX, Boolean>() {
             @Override
             public void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
@@ -235,7 +235,7 @@ public class SearchPackagesController implements IControllerBase, Initializable
                     setGraphic(null);
                 } else {
                     CheckBox checkBox = new CheckBox();
-                    WinGetPackage model = getTableView().getItems().get(getIndex());
+                    WinGetPackageFX model = getTableView().getItems().get(getIndex());
                     // Disable the checkbox if no package list is selected
                     checkBox.setDisable(selectedPackageList == null);
 
@@ -288,7 +288,7 @@ public class SearchPackagesController implements IControllerBase, Initializable
                 Platform.runLater(() -> {
                     if (query.getConsoleExitCode() == ConsoleExitCode.OK.getValue())
                     {
-                        query.CreatePackageList(PackageList.getSearchPackageList());
+                        query.CreatePackageList(PackageListFX.getSearchPackageList());
                         refreshTableViewContent();
                     }
                     else
@@ -308,20 +308,20 @@ public class SearchPackagesController implements IControllerBase, Initializable
     }
 
     public void initialize_comboBox_PackageList() {
-        ListManager listManager = ListManager.getInstance();
+        ListManagerFX listManager = ListManagerFX.getInstance();
         // Set the ObservableList from ListManager as the ComboBox items.
         comboBox_selectPackageList.setItems(listManager.getFXLists());
         // Define how the items are displayed in the ComboBox
-        comboBox_selectPackageList.setCellFactory(lv -> new ListCell<PackageList>() {
+        comboBox_selectPackageList.setCellFactory(lv -> new ListCell<PackageListFX>() {
             @Override
-            protected void updateItem(PackageList pkgList, boolean empty) {
+            protected void updateItem(PackageListFX pkgList, boolean empty) {
                 super.updateItem(pkgList, empty);
                 setText(empty ? "" : pkgList.getName());
             }
         });
 
         // Set the default selection to the package list with the specific ID
-        PackageList favouriteList = listManager.getFXLists().stream()
+        PackageListFX favouriteList = listManager.getFXLists().stream()
                 .filter(pkgList -> "favourite-list-uuid".equals(pkgList.getId()))
                 .findFirst()
                 .orElse(null);
@@ -329,14 +329,14 @@ public class SearchPackagesController implements IControllerBase, Initializable
         selectedPackageList = favouriteList;
 
         // Displays the selected item in the comboBox when it is not expanded.
-        comboBox_selectPackageList.setConverter(new StringConverter<PackageList>() {
+        comboBox_selectPackageList.setConverter(new StringConverter<PackageListFX>() {
             @Override
-            public String toString(PackageList object) {
+            public String toString(PackageListFX object) {
                 return (object != null ? object.getName() : "");
             }
             // This method is not needed but must be overwritten. It would be used to recognize a users typed input to select a packageList.
             @Override
-            public PackageList fromString(String string) {
+            public PackageListFX fromString(String string) {
                 return null;
             }
         });
