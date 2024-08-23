@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="splashScreenRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="470.0" style="-fx-background-color: #1d1d1d; -fx-border-width: 1; -fx-border-color: #333333;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.hftm.oop2_winget_project.Controller.SplashScreenController">
+<Pane fx:id="splashScreenRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.hftm.oop2_winget_project.Controller.SplashScreenController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4d4dff" height="113.0" layoutY="142.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="470.0" />
       <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="81.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
@@ -22,7 +22,7 @@
             <Font size="51.0" />
          </font>
       </Label>
-      <Label layoutX="81.0" layoutY="140.0" text="OOP2 Project by Luca Bützberger and Andrés Soria" textFill="#363636">
+      <Label layoutX="81.0" layoutY="140.0" text="Created by Andrés Soria, Luca Bützberger, Mateusz Kurowski" textFill="#363636">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>

@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane style="-fx-background-color: #1d1d1d;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.hftm.oop2_winget_project.Controller.InstalledPackagesController">
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.hftm.oop2_winget_project.Controller.InstalledPackagesController">
     <center>
         <TableView fx:id="tableView_installedPackages" prefHeight="200.0" styleClass="installedTableView" stylesheets="@../CSS/DarkTheme.css" BorderPane.alignment="TOP_LEFT">
             <columns>
-            <TableColumn editable="false" maxWidth="50.0" minWidth="-Infinity" prefWidth="50.0" resizable="false" sortable="false" />
-                <TableColumn fx:id="column_name" editable="false" minWidth="280.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Name" />
+            <TableColumn editable="false" maxWidth="30.0" minWidth="-Infinity" prefWidth="30.0" resizable="false" sortable="false" />
+                <TableColumn fx:id="column_name" editable="false" minWidth="300.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Name" />
                 <TableColumn fx:id="column_id" editable="false" minWidth="300.0" prefWidth="-1.0" reorderable="false" resizable="false" text="ID" />
-                <TableColumn fx:id="column_version" editable="false" minWidth="200.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Version" />
+                <TableColumn fx:id="column_version" editable="false" minWidth="300.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Version" />
                 <TableColumn fx:id="column_source" editable="false" minWidth="150.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Source" />
                 <TableColumn fx:id="column_action" editable="false" minWidth="130.0" prefWidth="-1.0" />
             </columns>

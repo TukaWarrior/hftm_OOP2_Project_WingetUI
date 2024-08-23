@@ -4,7 +4,6 @@ import ch.hftm.oop2_winget_project.App;
 import ch.hftm.oop2_winget_project.Model.Message;
 import ch.hftm.oop2_winget_project.Model.PackageListFX;
 import ch.hftm.oop2_winget_project.Model.WinGetQuery;
-import ch.hftm.oop2_winget_project.Model.WindowManager;
 import ch.hftm.oop2_winget_project.Util.QueryType;
 import ch.hftm.oop2_winget_project.Util.ResourceProvider;
 import javafx.application.Platform;
@@ -53,12 +52,6 @@ public class SplashScreenController implements Initializable
                 availableUpdates.CreateUpdateList(PackageListFX.getUpgradePackageList());
                 Stage stage = new Stage();
 
-                // WindowManager instance for Window Actions
-                WindowManager windowManager = new WindowManager(stage);
-
-                // Pass new windowManager object to app instance
-                App.getAppInstance().setWindowManager(windowManager);
-
                 FXMLLoader fxmlLoader;
                 Parent root;
                 try
@@ -66,14 +59,19 @@ public class SplashScreenController implements Initializable
                     fxmlLoader = new FXMLLoader(getClass().getResource(ResourceProvider.FXML_ROOT + ResourceProvider.MAINWINDOW_VIEW_NAME));
                     root = fxmlLoader.load();
 
-                    Scene scene = new Scene(root, windowManager.getDEFAULT_WINDOW_WIDTH(), windowManager.getDEFAULT_WINDOW_HEIGHT());
+                    // Adjusted to use standard size and style
+                    Scene scene = new Scene(root, 1410, 700);  // Use default size for the main window
 
                     // Set Taskbar Icon
                     stage.getIcons().add(ResourceProvider.getTaskbarIcon());
 
-                    // Borderless Window style
-                    stage.initStyle(StageStyle.UNDECORATED);
+                    // Optional: Use a standard window style
+                    stage.initStyle(StageStyle.DECORATED);
+
                     stage.setScene(scene);
+
+                    // Center the stage on the screen
+                    stage.centerOnScreen();
 
                     // Pass new stage object to app instance
                     App.setAppStage(stage);

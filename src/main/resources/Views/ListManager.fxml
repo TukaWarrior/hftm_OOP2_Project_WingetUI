@@ -13,12 +13,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefWidth="1110.0" style="-fx-background-color: #1d1d1d;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.hftm.oop2_winget_project.Controller.ListManagerController">
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.hftm.oop2_winget_project.Controller.ListManagerController">
     <center>
-        <TableView fx:id="tableView_packageLists" prefHeight="300.0" styleClass="installedTableView" stylesheets="@../CSS/DarkTheme.css" BorderPane.alignment="TOP_LEFT">
+        <TableView fx:id="tableView_packageLists" prefHeight="200.0" styleClass="installedTableView" stylesheets="@../CSS/DarkTheme.css" BorderPane.alignment="TOP_LEFT">
             <columns>
-                <TableColumn fx:id="column_name" editable="false" minWidth="280.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Name" />
-                <TableColumn fx:id="column_size" editable="false" minWidth="220.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Packages" />
+               <TableColumn editable="false" maxWidth="30.0" minWidth="-Infinity" prefWidth="30.0" resizable="false" sortable="false" />
+               <TableColumn fx:id="column_name" editable="false" minWidth="300.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Name" />
+               <TableColumn fx:id="column_size" editable="false" minWidth="880.0" prefWidth="-1.0" reorderable="false" resizable="false" text="Packages" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -27,8 +28,26 @@
     </center>
    <top>
       <BorderPane prefHeight="50.0" BorderPane.alignment="CENTER">
-         <top>
-            <Label graphicTextGap="20.0" styleClass="label-viewTitle" stylesheets="@../CSS/DarkTheme.css" text="Manage Favorite Collections" BorderPane.alignment="TOP_LEFT">
+         <right>
+                <HBox spacing="5.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="button_create" mnemonicParsing="false" onAction="#createPackageListButton_onAction" styleClass="addButton" stylesheets="@../CSS/DarkTheme.css" text="Create List" />
+                        <Button fx:id="button_delete" mnemonicParsing="false" onAction="#deletePackageListButton_onAction" styleClass="deleteButton" stylesheets="@../CSS/DarkTheme.css" text="Delete" />
+                        <Button fx:id="button_rename" mnemonicParsing="false" onAction="#buttonRename_onAction" styleClass="editButton" stylesheets="@../CSS/DarkTheme.css" text="Rename" />
+                        <Button fx:id="button_batchScript" mnemonicParsing="false" onAction="#buttoncreateBatchFile_onAction" styleClass="createScriptButton" stylesheets="@../CSS/DarkTheme.css" text="Create Script" />
+                        <TextField fx:id="textField_filter" promptText="Filter Packages" stylesheets="@../CSS/DarkTheme.css" />
+                        <ComboBox fx:id="comboBox_filter" prefWidth="150.0" stylesheets="@../CSS/DarkTheme.css" />
+                    </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="5.0" right="25.0" top="9.0" />
+               </padding>
+                </HBox>
+         </right>
+         <left>
+            <Label graphicTextGap="20.0" styleClass="label-viewTitle" stylesheets="@../CSS/DarkTheme.css" text="Manage Favorite Collections" BorderPane.alignment="CENTER">
                <graphic>
                   <ImageView fitHeight="48.0" fitWidth="48.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -37,21 +56,6 @@
                   </ImageView>
                </graphic>
             </Label>
-         </top>
-         <left>
-                <HBox spacing="20.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <Button fx:id="button_create" mnemonicParsing="false" onAction="#createPackageListButton_onAction" styleClass="addButton" stylesheets="@../CSS/DarkTheme.css" text="Create List" />
-                        <Button fx:id="button_delete" mnemonicParsing="false" onAction="#deletePackageListButton_onAction" styleClass="deleteButton" stylesheets="@../CSS/DarkTheme.css" text="Delete" />
-                        <Button fx:id="button_rename" mnemonicParsing="false" onAction="#buttonRename_onAction" styleClass="editButton" stylesheets="@../CSS/DarkTheme.css" text="Rename" />
-                        <Button fx:id="button_batchScript" mnemonicParsing="false" onAction="#buttoncreateBatchFile_onAction" styleClass="createScriptButton" stylesheets="@../CSS/DarkTheme.css" text="Create Install Script" />
-                        <TextField fx:id="textField_filter" promptText="Filter Packages" stylesheets="@../CSS/DarkTheme.css" />
-                        <ComboBox fx:id="comboBox_filter" prefWidth="150.0" stylesheets="@../CSS/DarkTheme.css" />
-                    </children>
-               <BorderPane.margin>
-                  <Insets top="40.0" />
-               </BorderPane.margin>
-                </HBox>
          </left>
       </BorderPane>
    </top>

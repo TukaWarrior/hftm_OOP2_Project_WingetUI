@@ -171,6 +171,8 @@
     -fx-padding: 5;
 }
 
+.table-view .column-header-background {
+}
 
 .table-view .column-header, .table-view .filler {
     -fx-size: 60;
@@ -193,18 +195,48 @@
     -fx-font-size: 10pt;
 }
 
+.table-row-cell:filled:selected {
+    -fx-font-size: 10pt;
+}
+
+.table-row-cell:filled:focused:selected {
+}
+
+.table-row-cell:filled:hover {
+}
+
 .table-row-cell:filled:selected, .table-row-cell:filled > .table-cell:selected {
     -fx-background: #512bd4;
 }
 
-/* Uninstall Button InstalledPackage TableView */
-.installedTableView .button-uninstall {
-    -fx-padding: 5 16 5 37;
+/* Install Button SearchPackage TableView */
+.searchTableView .button-install {
+    -fx-padding: 5 25 5 45;
+    -fx-border-color: #512bd4;
     -fx-border-width: 1;
     -fx-border-radius: 10em; /* radius for pill button style */
     -fx-background-radius: 10em; /* radius for pill button style */
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
+    -fx-background-image: url(../Icons/download.png);
+    -fx-background-size: 15px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 20%;
+}
+
+.searchTableView .button-install:hover {
+}
+
+/* Uninstall Button InstalledPackage TableView */
+.installedTableView .button-uninstall {
+    -fx-padding: 5 16 5 37;
+    /* -fx-border-color: #660000; */
+    -fx-border-width: 1;
+    -fx-border-radius: 10em; /* radius for pill button style */
+    -fx-background-radius: 10em; /* radius for pill button style */
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+
     -fx-background-image: url(../Icons/deleteIcon.png);
     -fx-background-size: 20px;
     -fx-background-repeat: no-repeat;
@@ -218,6 +250,7 @@
 /* Update Button UpgradePackage TableView */
 .upgradeTableView .button-upgrade {
     -fx-padding: 5 18 5 43;
+    /* -fx-border-color: #512bd4; */
     -fx-border-width: 1;
     -fx-border-radius: 10em; /* radius for pill button style */
     -fx-background-radius: 10em; /* radius for pill button style */
@@ -230,11 +263,11 @@
 }
 
 .upgradeTableView .button-upgrade:hover {
-    -fx-border-color: #0075c4;
+    -fx-border-color: #512bd4;
 }
 
 /* Install Button PackageList TableView */
-.button-install {
+.tableView_packages .button-install {
     -fx-padding: 5 25 5 45;
     /* -fx-border-color: #512bd4; */
     -fx-border-width: 1;
@@ -246,10 +279,12 @@
     -fx-background-size: 15px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: 20%;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
-.button-install:hover {
+.tableView_packages .button-install:hover {
     -fx-border-color: #0eb331;
+
 }
 
 /* Labels SearchPackage TableView */
@@ -372,20 +407,15 @@
  }
 
   .menuButton-active {
-    -fx-padding: 5 22 5 22;
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11.5pt;
+      -fx-padding: 5 22 5 22;
+      -fx-border-color: transparent;
+      -fx-border-width: 0;
+      -fx-background-radius: 0;
+      -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+      -fx-font-size: 11.5pt;
   }
 
  .menuButton:hover {
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-    -fx-border-width: 1;
-    -fx-border-color:#512bd4;
  }
 
 /*---------------------------------------------------*/

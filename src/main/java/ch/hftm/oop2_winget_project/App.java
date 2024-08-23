@@ -14,14 +14,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Level;
 
 public class App extends Application
 {
     private static App appInstance;
     private static Stage mainStage;
     private static MainWindowController mainWindowController;
-    private WindowManager windowManager;
+    // private WindowManager windowManager;
     private Settings winGetSettings;
     public ListManagerFX listManager;
     public ListManager listManagerDTO;
@@ -61,14 +60,14 @@ public class App extends Application
         Serializer.deserializeListManager(); // Converts .ser into listManager
         checkIfFavouriteListExists();
 
-        windowManager = new WindowManager(stage);
+        // windowManager = new WindowManager(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ResourceProvider.FXML_ROOT + ResourceProvider.SPLASHSCREEN_VIEW_NAME));
         Scene scene = new Scene(fxmlLoader.load());
 
         // Set styles
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setX((windowManager.getPrimaryScreenBounds().getWidth() / 2) - (windowManager.getDEFAULT_SPLASHSCREEN_WIDTH() / 2.0));
-        stage.setY((windowManager.getPrimaryScreenBounds().getHeight() / 2) - (windowManager.getDEFAULT_SPLASHSCREEN_HEIGHT() / 2.0));
+        // stage.initStyle(StageStyle.UNDECORATED);
+        // stage.setX((windowManager.getPrimaryScreenBounds().getWidth() / 2) - (windowManager.getDEFAULT_SPLASHSCREEN_WIDTH() / 2.0));
+        // stage.setY((windowManager.getPrimaryScreenBounds().getHeight() / 2) - (windowManager.getDEFAULT_SPLASHSCREEN_HEIGHT() / 2.0));
         stage.setScene(scene);
         stage.getIcons().add(ResourceProvider.getTaskbarIcon());
 
@@ -89,14 +88,14 @@ public class App extends Application
     {
         mainStage = stage;
     }
-    public void setWindowManager(WindowManager windowManager)
-    {
-        this.windowManager = windowManager;
-    }
-    public WindowManager getAppWindowManager()
-    {
-        return windowManager;
-    }
+    // public void setWindowManager(WindowManager windowManager)
+    // {
+    //     this.windowManager = windowManager;
+    // }
+    // public WindowManager getAppWindowManager()
+    // {
+    //     return windowManager;
+    // }
     public Settings getWinGetSettings()
     {
         return winGetSettings;
