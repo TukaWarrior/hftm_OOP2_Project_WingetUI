@@ -35,18 +35,18 @@ public class BatchFileCreator {
             // Formatting for welcome Ascii-Art because of unsupported characters.
             bw.newLine();
             bw.write("for /f \"delims=: tokens=*\" %%A in ('findstr /b ::: \"%~f0\"') do @echo(%%A\n");
-
+            
             // Ascii-Art
             bw.newLine();
             bw.write(":::  __        ___        ____      _     ___           _        _ _           ");
             bw.newLine();
-            bw.write(":::  \\ \\      / (_)_ __  / ___| ___| |_  |_ _|_ __  ___| |_ __ _| | | ___ _ __ ");
+            bw.write(":::  \\ \\      / (_)_ __  / ___| ___| |_  |_ _|_ __  ___| |_ __ _| | | ___ _ __      Created by ");
             bw.newLine();
-            bw.write(":::   \\ \\ /\\ / /| | '_ \\| |  _ / _ \\ __|  | || '_ \\/ __| __/ _` | | |/ _ \\ '__|     Created by "); // 5 Spaces after ascii Art
+            bw.write(":::   \\ \\ /\\ / /| | '_ \\| |  _ / _ \\ __|  | || '_ \\/ __| __/ _` | | |/ _ \\ '__|        Andres Soria"); // 5 Spaces after ascii Art
             bw.newLine();
-            bw.write(":::    \\ V  V / | | | | | |_| |  __/ |_   | || | | \\__ \\ || (_| | | |  __/ |        Andres Soria");
+            bw.write(":::    \\ V  V / | | | | | |_| |  __/ |_   | || | | \\__ \\ || (_| | | |  __/ |        Luca Buetzberger");
             bw.newLine();
-            bw.write(":::     \\_/\\_/  |_|_| |_|\\____|\\___|\\__| |___|_| |_|___/\\__\\__,_|_|_|\\___|_|        Luca Buetzberger");
+            bw.write(":::     \\_/\\_/  |_|_| |_|\\____|\\___|\\__| |___|_| |_|___/\\__\\__,_|_|_|\\___|_|        Mateusz Kurowski");
 
             // Package Listing
             bw.newLine();

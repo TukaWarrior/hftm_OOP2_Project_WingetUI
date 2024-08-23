@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\lucab\Repositories\hftm_OOP2_Project_WingetUI\target\OOP2_WinGet_Project-1.0-SNAPSHOT.jar</jar>
+  <outfile>C:\Users\lucab\Repositories\hftm_OOP2_Project_WingetUI\WinGetUI.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl></downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\lucab\Repositories\hftm_OOP2_Project_WingetUI\src\main\resources\Icons\taskbarIcon_colorized.ico</icon>
+  <jre>
+    <path>C:\Program Files\Java\jdk-21</path>
+    <requiresJdk>true</requiresJdk>
+    <requires64Bit>false</requires64Bit>
+    <minVersion>21.0.1</minVersion>
+    <maxVersion></maxVersion>
+  </jre>
+</launch4jConfig>
